@@ -8,10 +8,23 @@
 #ifndef BANKOCR_H_
 #define BANKOCR_H_
 #include <string>
+using namespace std;
+
 class BankOCR {
 public:
+	string zero;
+    string one;
+    string two;
+    string three;
+    string four;
+    string five;
+    string six;
+    string seven;
+    string eight;
+    string nine;
+
 	BankOCR();
-	int getTranslation(std::string input);
+	int getTranslation(string input);
 	virtual ~BankOCR();
 };
 
