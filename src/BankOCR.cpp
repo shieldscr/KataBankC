@@ -8,6 +8,8 @@
 #include "BankOCR.h"
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -61,5 +63,31 @@ int BankOCR::getTranslation(string input){
 	}
 
     return -1;
+}
+
+vector<string> BankOCR::readLine(string filename){
+	vector<string> line;
+	string top;
+	string middle;
+	string bottom;
+
+	ifstream inFile;
+	inFile.open(filename.c_str());
+
+	if(inFile.is_open()){
+		while (inFile.good()){
+			getline(inFile, top);
+			getline(inFile, middle);
+			getline(inFile, bottom);
+
+			line.push_back(top);
+			line.push_back(middle);
+			line.push_back(bottom);
+		}
+	}
+
+	return line;
+
+	inFile.close();
 }
 

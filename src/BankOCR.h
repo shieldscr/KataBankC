@@ -8,6 +8,8 @@
 #ifndef BANKOCR_H_
 #define BANKOCR_H_
 #include <string>
+#include <vector>
+
 using namespace std;
 
 class BankOCR {
@@ -25,6 +27,7 @@ public:
 
 	BankOCR();
 	int getTranslation(string input);
+	vector<string> readLine(string filename);
 	virtual ~BankOCR();
 };
 
