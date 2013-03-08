@@ -51,7 +51,7 @@ int BankOCR::translateAccountNumber(vector<string> lines, int startPoint){
 
 	for(std::vector<string>::size_type i = 0; i < lines.size(); i++){
 		for(int j=0; j<ROWS; j++){
-			match += lines[i].at(j+(startPoint*3));
+			match += lines[i].at(j);
 		}
 		match += "\n";
 	}
