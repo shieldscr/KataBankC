@@ -13,6 +13,9 @@
 
 using namespace std;
 
+const int ROWS = 3;
+const int TOTAL_NUMBERS = 9;
+
 BankOCR::BankOCR() {
 	zero = " _ \n| |\n|_|\n";
 	one = "   \n  |\n  |\n";
@@ -28,6 +31,31 @@ BankOCR::BankOCR() {
 
 BankOCR::~BankOCR() {
 	// TODO Auto-generated destructor stub
+}
+
+vector<int> BankOCR::parseNumberList(vector<string> lines){
+	vector<int> translateList;
+    for(int i=0;i<TOTAL_NUMBERS;i++){
+    	if(translateAccountNumber(lines, i) != -1){
+    		translateList.push_back(translateAccountNumber(lines, -1));
+    	}
+    	else{
+    		translateList.push_back(translateAccountNumber(lines, i));
+    	}
+    }
+	return translateList;
+}
+
+int BankOCR::translateAccountNumber(vector<string> lines, int startPoint){
+	string match;
+
+	for(std::vector<string>::size_type i = 0; i < lines.size(); i++){
+		for(int j=0; j<ROWS; j++){
+			match += lines[i].at(j+(startPoint*3));
+		}
+		match += "\n";
+	}
+	return getTranslation(match);
 }
 
 int BankOCR::getTranslation(string input){
@@ -65,11 +93,12 @@ int BankOCR::getTranslation(string input){
     return -1;
 }
 
-vector<string> BankOCR::readLine(string filename){
-	vector<string> line;
+vector<vector<string> > BankOCR::readLine(string filename){
+	vector<vector<string> > wholeFile;
 	string top;
 	string middle;
 	string bottom;
+	string temp;
 
 	ifstream inFile;
 	inFile.open(filename.c_str());
@@ -79,15 +108,20 @@ vector<string> BankOCR::readLine(string filename){
 			getline(inFile, top);
 			getline(inFile, middle);
 			getline(inFile, bottom);
-
-			line.push_back(top);
-			line.push_back(middle);
-			line.push_back(bottom);
+			vector<string> addList;
+			addList.push_back(top);
+			addList.push_back(middle);
+			addList.push_back(bottom);
+			wholeFile.push_back(addList);
+			if(inFile.good()){
+				getline(inFile, temp);
+			}
+			else{
+				break;
+			}
 		}
+		inFile.close();
 	}
-
-	return line;
-
-	inFile.close();
+	return wholeFile;
 }
 

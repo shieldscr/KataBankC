@@ -25,13 +25,40 @@ TEST(BankOCR, ItReturnsNegativeOneWhenNoMatch){
 }
 
 TEST(BankOCR, ItReadsFileAndReturnsNonEmptyList){
-	BankOCR ocr;
-	vector<string> lineList = ocr.readLine("./input.txt");
+	vector<vector<string> > lineList = ocr.readLine("./resources/input.txt");
+	/**
+	for(std::vector<string>::size_type i = 0; i != 2; i++){
+		for(std::vector<string>::size_type j = 0; j != lineList[i].size(); j++){
+			cout << lineList[i][j] << endl;
+		}
+	}
+	**/
+	CHECK(ocr.readLine("./resources/input.txt").size() >= 1);
+}
 
-	for(std::vector<string>::size_type i = 0; i != lineList.size(); i++){
-		cout << lineList[i] << endl;
+TEST(BankOCR, ItReturnsCorrectTranslationOfASingleAccountNumber){
+	vector<vector<string> > lineList = ocr.readLine("./resources/zeroinput.txt");
+	vector<int> out;
+	for(std::vector<string>::size_type i = 0; i < lineList.size(); i++){
+		out = ocr.parseNumberList(lineList[i]);
+		for(std::vector<int>::size_type j=0; j < out.size(); j++){
+			//cout << out[i];
+		}
 	}
 
-	CHECK(ocr.readLine("./input.txt").size() >= 1);
+	CHECK_EQUAL(000000000, ocr.translateAccountNumber(lineList[0], 0));
+}
+
+TEST(BankOCR, ItDoes){
+	vector<vector<string> > lineList = ocr.readLine("./resources/input.txt");
+
+	vector<int> out;
+	for(std::vector<string>::size_type i = 0; i < lineList.size(); i++){
+		out = ocr.parseNumberList(lineList[i]);
+		for(std::vector<int>::size_type j=0; j < out.size(); j++){
+			cout << out[i];
+		}
+		cout << endl;
+	}
 }
 

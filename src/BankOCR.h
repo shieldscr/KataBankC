@@ -27,7 +27,11 @@ public:
 
 	BankOCR();
 	int getTranslation(string input);
-	vector<string> readLine(string filename);
+	vector<vector<string> > readLine(string filename);
+	vector<int> parseNumberList(vector<string> lines);
+	string getNumber(string accountNumber);
+	int translateAccountNumber(vector<string> lines, int startPoint);
+
 	virtual ~BankOCR();
 };
 
