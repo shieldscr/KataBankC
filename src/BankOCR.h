@@ -30,6 +30,7 @@ public:
 	vector<vector<string> > readLine(string filename);
 	vector<int> parseNumberList(vector<string> lines);
 	string getNumber(string accountNumber);
+	int verifyAccountNumberChecksum(vector<int> inputList);
 	int translateAccountNumber(vector<string> lines, int startPoint);
 
 	virtual ~BankOCR();

@@ -57,6 +57,26 @@ int BankOCR::translateAccountNumber(vector<string> lines, int startPoint){
 	return getTranslation(match);
 }
 
+/**
+ * Verifies that account number is valid by use of checksum. Returns 0 if valid and -1 otherwise
+ *
+ * @param inputList The list of account number to be verified
+ * @return 0 if account number is valid, -1 otherwise
+*/
+int BankOCR::verifyAccountNumberChecksum(vector<int> inputList){
+	int sum;
+	int nine = inputList[inputList.size()-1];
+	int eight = inputList[inputList.size()-2];
+	sum = nine + eight;
+	for(int i=inputList.size()-2;i>0;i--){
+		sum = sum * (inputList[i-1] + inputList[i]);
+	}
+	if(sum%11 == 0){
+		return 0;
+	}
+	return -1;
+}
+
 int BankOCR::getTranslation(string input){
 	if(input == zero){
 		return 0;

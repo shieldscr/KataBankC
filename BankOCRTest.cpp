@@ -72,3 +72,33 @@ TEST(BankOCR, ItTranslatesFileOfNumbers){
 	CHECK_EQUAL(valid, true);
 }
 
+TEST(BankOCR, ItVerifiesAccountNumberSuccess){
+	vector<int> testList;
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+	testList.push_back(0);
+
+	CHECK_EQUAL(0, ocr.verifyAccountNumberChecksum(testList))
+}
+
+TEST(BankOCR, ItVerifiesAccountNumberFail){
+	vector<int> testList;
+	testList.push_back(0);
+	testList.push_back(1);
+	testList.push_back(0);
+	testList.push_back(1);
+	testList.push_back(0);
+	testList.push_back(1);
+	testList.push_back(0);
+	testList.push_back(1);
+	testList.push_back(0);
+
+	CHECK_EQUAL(-1, ocr.verifyAccountNumberChecksum(testList))
+}
+
