@@ -40,26 +40,35 @@ TEST(BankOCR, ItReturnsCorrectTranslationOfAStringOfZeros){
 TEST(BankOCR, ItReturnsCorrectTranslationOfAStringOfFives){
 	vector<vector<string> > lineList = ocr.readLine("./resources/fiveinput.txt");
 	vector<int> out;
-	string outArray [9];
-	//string testArray [9] = {5,5,5,5,5,5,5,5,5};
+	int testArray[9] = {5,5,5,5,5,5,5,5,5};
 
 	for(std::vector<string>::size_type i = 0; i < lineList.size(); i++){
 			out = ocr.parseNumberList(lineList[i]);
-			//outArray[i] = out;
 	}
-	//CHECK_EQUAL(outArray, testArray);
+
+	bool valid = true;
+	for(std::vector<string>::size_type i = 0; i < out.size(); i++){
+		if(out[i] != testArray[i]){
+			valid = false;
+		}
+	}
+	CHECK_EQUAL(valid, true);
 }
 
-TEST(BankOCR, ItTranslatesFileOfNumbers){
-	vector<vector<string> > lineList = ocr.readLine("./resources/fiveinput.txt");
 
+TEST(BankOCR, ItTranslatesFileOfNumbers){
+	vector<vector<string> > lineList = ocr.readLine("./resources/comboinput.txt");
 	vector<int> out;
-	for(std::vector<string>::size_type i = 0; i < lineList.size(); i++){
-		out = ocr.parseNumberList(lineList[i]);
-		for(std::vector<int>::size_type j=0; j < out.size(); j++){
-			cout << out[i];
+	int testArray[9] = {1,2,3,4,5,6,7,8,9};
+
+	out = ocr.parseNumberList(lineList[0]);
+
+	bool valid = true;
+	for(std::vector<string>::size_type i = 0; i < out.size(); i++){
+		if(out[i] != testArray[i]){
+			valid = false;
 		}
-		cout << endl;
 	}
+	CHECK_EQUAL(valid, true);
 }
 

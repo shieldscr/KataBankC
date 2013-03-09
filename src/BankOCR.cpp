@@ -37,10 +37,10 @@ vector<int> BankOCR::parseNumberList(vector<string> lines){
 	vector<int> translateList;
     for(int i=0;i<TOTAL_NUMBERS;i++){
     	if(translateAccountNumber(lines, i) != -1){
-    		translateList.push_back(translateAccountNumber(lines, -1));
+    		translateList.push_back(translateAccountNumber(lines, i));
     	}
     	else{
-    		translateList.push_back(translateAccountNumber(lines, i));
+    		translateList.push_back(-1);
     	}
     }
 	return translateList;
@@ -48,10 +48,9 @@ vector<int> BankOCR::parseNumberList(vector<string> lines){
 
 int BankOCR::translateAccountNumber(vector<string> lines, int startPoint){
 	string match;
-
 	for(std::vector<string>::size_type i = 0; i < lines.size(); i++){
 		for(int j=0; j<ROWS; j++){
-			match += lines[i].at(j);
+			match += lines[i][j + (startPoint*3)];
 		}
 		match += "\n";
 	}
