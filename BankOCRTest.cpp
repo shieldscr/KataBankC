@@ -72,6 +72,9 @@ TEST(BankOCR, ItTranslatesFileOfNumbers){
 	CHECK_EQUAL(valid, true);
 }
 
+/**
+ * Tests for correct account numbers, and that they are judged as so
+ */
 TEST(BankOCR, ItVerifiesAccountNumberSuccess){
 	vector<int> testList;
 	testList.push_back(0);
@@ -87,6 +90,9 @@ TEST(BankOCR, ItVerifiesAccountNumberSuccess){
 	CHECK_EQUAL(0, ocr.verifyAccountNumberChecksum(testList))
 }
 
+/**
+ * Tests for incorrect account numbers, and that they are judged as so
+ */
 TEST(BankOCR, ItVerifiesAccountNumberFail){
 	vector<int> testList;
 	testList.push_back(0);

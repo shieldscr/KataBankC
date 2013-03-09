@@ -31,6 +31,8 @@ public:
 	vector<int> parseNumberList(vector<string> lines);
 	string getNumber(string accountNumber);
 	int verifyAccountNumberChecksum(vector<int> inputList);
+	int verifyAccountNumberReading(vector<int> inputList);
+	vector<string> generatePrintOCR(vector<int> inputList);
 	int translateAccountNumber(vector<string> lines, int startPoint);
 
 	virtual ~BankOCR();

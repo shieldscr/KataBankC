@@ -77,6 +77,21 @@ int BankOCR::verifyAccountNumberChecksum(vector<int> inputList){
 	return -1;
 }
 
+/**
+ * Searches list for -1 int values and returns -1 if found (true) or 0 if not found (false). Represents bad character reading.
+ *
+ * @param inputList List to be checked for bad characters
+ * @return int -1 if bad character found, 0 all characters are valid
+ */
+int BankOCR::verifyAccountNumberReading(vector<int> inputList){
+	for(std::vector<string>::size_type i = 0; i < inputList.size(); i++){
+		if(inputList[i] == -1){
+			return -1;
+		}
+	}
+	return 0;
+}
+
 int BankOCR::getTranslation(string input){
 	if(input == zero){
 		return 0;
@@ -142,5 +157,11 @@ vector<vector<string> > BankOCR::readLine(string filename){
 		inFile.close();
 	}
 	return wholeFile;
+}
+
+vector<string> BankOCR::generatePrintOCR(vector<int> inputList){
+	vector<string> out;
+
+	return out;
 }
 
