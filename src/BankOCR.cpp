@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -33,6 +34,11 @@ BankOCR::~BankOCR() {
 	// TODO Auto-generated destructor stub
 }
 
+/**
+ * Takes a group of digital numbers, breaks them up one by one, and returns a list of integers representing each number
+ *
+ * @param inputList The string list representing digital numbers that will be translated
+ */
 vector<int> BankOCR::parseNumberList(vector<string> lines){
 	vector<int> translateList;
     for(int i=0;i<TOTAL_NUMBERS;i++){
@@ -46,6 +52,14 @@ vector<int> BankOCR::parseNumberList(vector<string> lines){
 	return translateList;
 }
 
+/**
+*Takes one digital number and translates it to an integer
+*
+*@param inList The string list that represents a digital number
+*@param startPoint An integer that specifies where the translation should start from provided input
+*
+*@return int The integer that represents the input boolean list or -1 if no match was found
+**/
 int BankOCR::translateAccountNumber(vector<string> lines, int startPoint){
 	string match;
 	for(std::vector<string>::size_type i = 0; i < lines.size(); i++){
@@ -92,6 +106,11 @@ int BankOCR::verifyAccountNumberReading(vector<int> inputList){
 	return 0;
 }
 
+/**
+ * Finds a match for given digital number. Returns that int match
+ *
+ * @param string input The int translation of input string
+ */
 int BankOCR::getTranslation(string input){
 	if(input == zero){
 		return 0;
@@ -127,6 +146,11 @@ int BankOCR::getTranslation(string input){
     return -1;
 }
 
+/**
+* Reads file of underscores and pipes and creates a list of top, middle, and bottom portions for each entry
+*
+* @param fileName The path and name of the file to be read
+*/
 vector<vector<string> > BankOCR::readLine(string filename){
 	vector<vector<string> > wholeFile;
 	string top;
@@ -159,9 +183,36 @@ vector<vector<string> > BankOCR::readLine(string filename){
 	return wholeFile;
 }
 
+/**
+ * Appends either "ERR" if number does not pass checksum, OR "ILL" if number is not valid and returns a vector<string> for each number in read input. Replaces all unreadable
+ * numbers with a "?" character
+ *
+ * @param inList The list to be printed out
+ * @return vector<string> The generated list ready for printing
+ */
 vector<string> BankOCR::generatePrintOCR(vector<int> inputList){
-	vector<string> out;
+	vector<string> convertedList;
+	ostringstream convert;
 
-	return out;
+	for(std::vector<string>::size_type i = 0; i < inputList.size(); i++){
+		if(inputList[i] == -1){
+			convertedList.push_back("?");
+		}
+		else{
+			convert << inputList[i];
+			convertedList.push_back(convert.str());
+			convert.str("");
+			convert.clear();
+		}
+	}
+	if(verifyAccountNumberReading(inputList) == -1){
+		convertedList.push_back(" ILL");
+		return convertedList;
+	}
+	if(verifyAccountNumberChecksum(inputList) == -1){
+		convertedList.push_back(" ERR");
+		return convertedList;
+	}
+	return convertedList;
 }
 
